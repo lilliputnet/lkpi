@@ -320,10 +320,12 @@ SKIP_HEAVY_MIGRATIONS = env.bool('SKIP_HEAVY_MIGRATIONS', False)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+DATABASES = {}
+if 'KPI_DATABASE_URL' in os.environ:
+    DATABASES['default'] = env.db_url('KPI_DATABASE_URL')
+else:
+    DATABASES['default'] = env.db_url('DATABASE_URL')
 
-DATABASES = {
-    'default': env.db(default="sqlite:///%s/db.sqlite3" % BASE_DIR),
-}
 if 'KC_DATABASE_URL' in os.environ:
     DATABASES['kobocat'] = env.db_url('KC_DATABASE_URL')
 
